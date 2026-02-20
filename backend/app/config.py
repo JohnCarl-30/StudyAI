@@ -30,8 +30,7 @@ class Settings(BaseSettings):
 
     # App
     DEBUG: bool = False
-    ALLOWED_ORIGINS: str = "http://localhost:3000, http://localhost:8000"
-
+    ALLOWED_ORIGINS: str = "http://localhost:3000,http://localhost:8000,https://study-ai-sepia.vercel.app,https://study-ai-murex.vercel.app"
     model_config = SettingsConfigDict(env_file=".env", case_sensitive=True)
 
 settings = Settings()
