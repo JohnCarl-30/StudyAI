@@ -1,0 +1,47 @@
+# FastAPI Core
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+python-multipart==0.0.6
+
+# Database
+sqlalchemy==2.0.23
+psycopg2-binary==2.9.9
+alembic==1.12.1
+
+# Authentication & Security
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-dotenv==1.0.0
+
+# Data Validation
+pydantic==2.5.0
+pydantic-settings==2.1.0
+
+# PDF Processing
+pypdf2==3.0.1
+pdfplumber==0.10.3
+
+# ============================================
+# LangChain - Fixed versions
+# ============================================
+langchain==0.1.0
+langchain-core==0.1.16
+langchain-community==0.0.10
+langchain-openai==0.0.5
+langchain-anthropic==0.1.1
+
+# ============================================
+# Pinecone - Vector Database (replaces ChromaDB!)
+# ============================================
+pinecone-client==3.0.3
+langchain-pinecone==0.0.3
+
+# AI APIs
+anthropic==0.18.1
+openai==1.10.0
+
+# Utilities
+python-dateutil==2.8.2
+aiofiles==23.2.1
+tiktoken==0.5.2
+langsmith==0.0.87
