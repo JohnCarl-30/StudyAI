@@ -31,6 +31,7 @@ langchain-core==0.1.16
 langchain-community==0.0.10
 langchain-openai==0.0.5
 langchain-anthropic==0.1.1
+langchain-text-splitters==0.0.1
 
 # ============================================
 # Pinecone - Vector Database (replaces ChromaDB!)
