@@ -1,0 +1,49 @@
+services:
+  # ── Backend ──────────────────────────────────────────────────────────────
+  - type: web
+    name: studyai-backend
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        sync: false          # set manually in Render dashboard
+      - key: SECRET_KEY
+        generateValue: true  # Render generates this automatically
+      - key: ALGORITHM
+        value: HS256
+      - key: PINECONE_API_KEY
+        sync: false
+      - key: PINECONE_ENVIRONMENT
+        value: us-east-1
+      - key: PINECONE_INDEX_NAME
+        value: studyai
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: UPLOAD_DIRECTORY
+        value: ./uploads
+      - key: MAX_UPLOAD_SIZE
+        value: 10485760
+      - key: DEBUG
+        value: false
+      - key: ALLOWED_ORIGINS
+        value: https://studyai-frontend.onrender.com
+
+  # ── Frontend ─────────────────────────────────────────────────────────────
+  - type: web
+    name: studyai-frontend
+    runtime: node
+    rootDir: frontend
+    buildCommand: npm ci && npm run build
+    startCommand: node .next/standalone/server.js
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        value: https://studyai-backend.onrender.com/api/v1
+      - key: PORT
+        value: 3000
+      - key: HOSTNAME
+        value: 0.0.0.0
