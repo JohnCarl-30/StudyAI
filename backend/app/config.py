@@ -30,7 +30,7 @@ class Settings(BaseSettings):
 
     # App
     DEBUG: bool = False
-    ALLOWED_ORIGINS: str = "http://localhost:3000,http://localhost:8080"
+    ALLOWED_ORIGINS: str = "http://localhost:3000, http://localhost:8000"
 
     model_config = SettingsConfigDict(env_file=".env", case_sensitive=True)
 
