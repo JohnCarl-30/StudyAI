@@ -47,6 +47,7 @@ async def websocket_chat(
     try:
         user = _authenticate(token, db)
         if not user:
+            await websocket.accept()
             await websocket.close(code=4001, reason="Unauthorized")
             return
 
