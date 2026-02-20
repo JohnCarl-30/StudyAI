@@ -14,10 +14,16 @@ StudyAI is an AI-powered study assistant. Users upload PDFs and the app uses RAG
 | 2 | FastAPI backend, auth, CRUD, Alembic | **Done** |
 | 3 | PDF processing, chunking, Pinecone embeddings | **Done** |
 | 4 | Claude RAG, flashcard generation, prompt engineering | **Done** |
-| 5 | SM-2 spaced repetition, review scheduling, analytics | In Progress |
-| 6 | Next.js + TypeScript frontend (upload, chat, flashcards, dashboard) | Pending |
-| 7 | WebSocket real-time chat, performance, security | Pending |
-| 8 | Docker, Railway deployment, GitHub Actions CI/CD | Pending |
+| 5 | SM-2 spaced repetition, review scheduling, analytics | **Done** |
+| 6 | Next.js + TypeScript frontend (upload, chat, flashcards, dashboard) | **Done** |
+| 7 | WebSocket real-time chat, performance, security | **Done** |
+| 8 | Docker, Render + Vercel deployment, GitHub Actions CI/CD | **Done** |
+
+## Deployed URLs
+
+- **Frontend**: https://study-ai-sepia.vercel.app
+- **Backend**: https://studyai-vx3y.onrender.com
+- **API Docs**: https://studyai-vx3y.onrender.com/docs
 
 ## Running the Project
 

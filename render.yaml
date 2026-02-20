@@ -31,7 +31,7 @@ services:
       - key: DEBUG
         value: false
       - key: ALLOWED_ORIGINS
-        value: https://studyai-frontend.onrender.com
+        value: https://study-ai-sepia.vercel.app
 
   # ── Frontend ─────────────────────────────────────────────────────────────
   - type: web
