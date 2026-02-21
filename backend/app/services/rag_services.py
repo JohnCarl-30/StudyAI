@@ -91,7 +91,7 @@ class RAGService:
 
         self.embeddings = OpenAIEmbeddings(
             model="text-embedding-3-small",
-            api_key=settings.OPENAI_API_KEY
+            openai_api_key=settings.OPENAI_API_KEY
         )
 
         # Initialize once and reuse — creating PineconeService on every

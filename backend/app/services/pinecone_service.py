@@ -30,7 +30,7 @@ class PineconeService:
 
         self.embeddings = OpenAIEmbeddings(
             model="text-embedding-3-small",
-            api_key=settings.OPENAI_API_KEY
+            openai_api_key=settings.OPENAI_API_KEY
         )
 
         print(f"✅ Pinecone initialized: index={self.index_name}")
