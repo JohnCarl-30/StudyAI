@@ -4,7 +4,7 @@ Senior Tip: PDFs are tricky - try multiple libraries for best results.
 """
 import os
 from typing import List, Tuple
-import PyPDF2
+from pypdf import PdfReader
 import pdfplumber
 
 
@@ -116,7 +116,7 @@ class PDFProcessor:
         text_parts = []
 
         with open(pdf_path, 'rb') as file:
-            reader = PyPDF2.PdfReader(file)
+            reader = PdfReader(file)
             page_count = len(reader.pages)
 
             for page in reader.pages:
