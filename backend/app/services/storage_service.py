@@ -34,7 +34,7 @@ class StorageService:
         self._client.storage.from_(self.bucket).upload(
             path=storage_path,
             file=file_bytes,
-            file_options={"content-type": "application/pdf", "upsert": True},
+            file_options={"content-type": "application/pdf"},
         )
         return storage_path
 
