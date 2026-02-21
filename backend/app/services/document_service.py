@@ -113,6 +113,7 @@ class DocumentService:
             return document
 
         except Exception as e:
+            self.db.rollback()
             document.status = ProcessingStatus.FAILED
             document.processing_error = str(e)
             self.db.commit()

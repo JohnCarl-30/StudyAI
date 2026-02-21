@@ -54,7 +54,7 @@ async def upload_document(
         return document
     except Exception as e:
         print(f"Error uploading document: {str(e)}")
-        raise HTTPException(status_code=500, detail="Failed to upload document")
+        raise HTTPException(status_code=500, detail=f"Upload failed: {str(e)}")
 
 
 @router.get("/", response_model=List[DocumentResponse])

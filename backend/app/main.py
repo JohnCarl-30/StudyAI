@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import os
 
 from app.config import settings
+from app.database import init_db
 from app.api import auth, documents, chat, flashcards, websocket
 
 
@@ -27,6 +28,9 @@ app.add_middleware(
 def on_startup():
     """Initialize required directories and validate config."""
     print("🚀 Starting up StudyAI API...")
+
+    init_db()
+    print("✅ Database tables ready")
 
     os.makedirs(settings.UPLOAD_DIRECTORY, exist_ok=True)
     print(f"✅ Uploads directory ready: {settings.UPLOAD_DIRECTORY}")
