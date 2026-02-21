@@ -227,7 +227,7 @@ class RAGService:
         search_query = topic if topic else "main concepts and key information"
 
         # Get relevant chunks
-        relevant_docs = retriever.get_relevant_documents(search_query)
+        relevant_docs = retriever.invoke(search_query)
 
      
         context = "\n\n---\n\n".join([
@@ -288,7 +288,7 @@ class RAGService:
     
         retriever = self.get_retriever(user_id, document_id, k=k)
 
-        results = retriever.get_relevant_documents(query)
+        results = retriever.invoke(query)
 
         return [
             {
