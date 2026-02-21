@@ -74,7 +74,7 @@ class RAGService:
 
 
     def __init__(self):
-      
+
         self.llm = ChatAnthropic(
             model="claude-3-haiku-20240307",
             api_key=settings.ANTHROPIC_API_KEY,
@@ -89,14 +89,18 @@ class RAGService:
             max_tokens=4096
         )
 
-      
         self.embeddings = OpenAIEmbeddings(
             model="text-embedding-3-small",
             api_key=settings.OPENAI_API_KEY
         )
 
+        # Initialize once and reuse — creating PineconeService on every
+        # request caused _ensure_index_exists() to run on each call,
+        # making requests timeout and CORS headers never arrive.
+        self._pinecone = PineconeService()
+
     def get_vectorstore(self, user_id: int):
-        return PineconeService().get_vectorstore(user_id)
+        return self._pinecone.get_vectorstore(user_id)
 
     def get_retriever(
         self,
