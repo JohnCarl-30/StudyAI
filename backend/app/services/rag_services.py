@@ -91,7 +91,7 @@ class RAGService:
 
         import httpx
         self.embeddings = OpenAIEmbeddings(
-            model="text-embedding-3-small",
+            model="text-embedding-ada-002",
             openai_api_key=settings.OPENAI_API_KEY,
             http_client=httpx.Client(),
             http_async_client=httpx.AsyncClient()
