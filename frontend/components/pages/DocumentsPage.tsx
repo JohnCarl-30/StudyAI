@@ -17,6 +17,7 @@ interface Document {
 export default function DocumentsPage() {
   const [docs, setDocs] = useState<Document[]>([]);
   const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
   const load = () => documentsApi.list().then((r) => setDocs(r.data));
@@ -27,9 +28,15 @@ export default function DocumentsPage() {
     const file = e.target.files?.[0];
     if (!file) return;
     setUploading(true);
+    setUploadError(null);
     try {
       await documentsApi.upload(file, file.name.replace(".pdf", ""));
       await load();
+    } catch (err: unknown) {
+      const detail =
+        (err as { response?: { data?: { detail?: string } } })?.response?.data?.detail ??
+        "Upload failed. Please try again.";
+      setUploadError(detail);
     } finally {
       setUploading(false);
       if (fileRef.current) fileRef.current.value = "";
@@ -65,6 +72,12 @@ export default function DocumentsPage() {
           />
         </label>
       </div>
+
+      {uploadError && (
+        <div className="mb-4 px-4 py-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">
+          <strong>Upload error:</strong> {uploadError}
+        </div>
+      )}
 
       {docs.length === 0 ? (
         <div className="text-center py-16 text-gray-400">
