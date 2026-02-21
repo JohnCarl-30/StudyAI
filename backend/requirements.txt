@@ -24,25 +24,26 @@ pypdf2==3.0.1
 pdfplumber==0.10.3
 
 # ============================================
-# LangChain - Compatible versions (0.1.x series)
-# anthropic must be <0.49.0 (0.49.0 removed the 'proxies' kwarg that
-# langchain-anthropic 0.1.x passes to anthropic.Anthropic())
+# LangChain - exact pins from original working build
 # ============================================
-langchain>=0.1.16,<0.2
-langchain-core>=0.1.52,<0.2
-langchain-community>=0.0.32,<0.1
-langchain-openai>=0.1.3,<0.2
-langchain-anthropic>=0.1.15,<0.2
+langchain==0.1.0
+langchain-core==0.1.16
+langchain-community==0.0.10
+langchain-openai==0.0.5
+langchain-anthropic==0.1.1
 
 # ============================================
 # Pinecone - Vector Database (replaces ChromaDB!)
 # ============================================
 pinecone-client==3.0.3
-langchain-pinecone>=0.0.3,<0.2
+langchain-pinecone==0.0.3
 
 # AI APIs
-anthropic>=0.30.0,<0.49.0
-openai>=1.10.0,<2
+# anthropic 0.18.1 is too old — langchain-anthropic 0.1.1 passes the
+# 'proxies' kwarg to anthropic.Anthropic() which requires >=0.20.0.
+# 0.49.0 removed 'proxies', so we cap below it.
+anthropic==0.40.0
+openai==1.10.0
 
 # Cloud Storage
 supabase>=2.3.0
