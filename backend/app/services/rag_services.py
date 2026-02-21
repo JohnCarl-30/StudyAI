@@ -77,14 +77,14 @@ class RAGService:
 
         self.llm = ChatAnthropic(
             model="claude-3-haiku-20240307",
-            api_key=settings.ANTHROPIC_API_KEY,
-            temperature=0.3,   #more concise
+            anthropic_api_key=settings.ANTHROPIC_API_KEY,
+            temperature=0.3,
             max_tokens=2048
         )
 
         self.flashcard_llm = ChatAnthropic(
             model="claude-3-sonnet-20240229",
-            api_key=settings.ANTHROPIC_API_KEY,
+            anthropic_api_key=settings.ANTHROPIC_API_KEY,
             temperature=0.5,
             max_tokens=4096
         )

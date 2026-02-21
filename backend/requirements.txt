@@ -24,13 +24,13 @@ pypdf2==3.0.1
 pdfplumber==0.10.3
 
 # ============================================
-# LangChain - Fixed versions
+# LangChain - Compatible versions
 # ============================================
-langchain==0.1.0
-langchain-core==0.1.16
-langchain-community==0.0.10
-langchain-openai==0.0.5
-langchain-anthropic==0.1.1
+langchain==0.1.20
+langchain-core==0.1.52
+langchain-community==0.0.38
+langchain-openai==0.1.8
+langchain-anthropic==0.1.23
 
 # ============================================
 # Pinecone - Vector Database (replaces ChromaDB!)
@@ -39,7 +39,7 @@ pinecone-client==3.0.3
 langchain-pinecone==0.0.3
 
 # AI APIs
-anthropic==0.18.1
+anthropic==0.45.0
 openai==1.10.0
 
 # Cloud Storage
