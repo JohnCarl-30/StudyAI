@@ -24,7 +24,7 @@ class Document(Base):
     title = Column(String, nullable=True)
     page_count = Column(Integer, nullable=True)
     
-    status = Column(Enum(ProcessingStatus), default=ProcessingStatus.PENDING)
+    status = Column(Enum(ProcessingStatus, values_callable=lambda x: [e.value for e in x]), default=ProcessingStatus.PENDING)
     processing_error = Column(Text, nullable=True)
     extracted_text = Column(Text, nullable=True)
     chunk_count = Column(Integer, default=0)
