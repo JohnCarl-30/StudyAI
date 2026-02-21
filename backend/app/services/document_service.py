@@ -3,7 +3,6 @@ Document service - business logic for document management.
 Senior Tip: Services contain business logic, keep routes thin.
 """
 import os
-import shutil
 from typing import List, Optional
 from sqlalchemy.orm import Session
 from datetime import datetime
@@ -13,7 +12,7 @@ from app.models.document_chunk import DocumentChunk
 from app.models.user import User
 from app.services.pdf_service import PDFProcessor
 from app.utils.chunking import PageAwareChunker
-from app.config import settings
+from app.services.storage_service import StorageService
 
 
 class DocumentService:
@@ -29,27 +28,19 @@ class DocumentService:
     @staticmethod
     def save_upload_file(upload_file, user_id: int) -> tuple[str, int]:
         """
-        Save an uploaded file to disk, organized by user_id.
-        Static because it needs no database access.
+        Upload a file to Supabase Storage.
 
         Returns:
-            (file_path, file_size)
-
-        Senior Tip: Organize files by user_id to avoid conflicts.
+            (storage_path, file_size)
         """
-        upload_dir = os.path.join(settings.UPLOAD_DIRECTORY, str(user_id))
-        os.makedirs(upload_dir, exist_ok=True)
+        file_bytes = upload_file.file.read()
+        file_size = len(file_bytes)
 
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        filename = f"{timestamp}_{upload_file.filename}"
-        file_path = os.path.join(upload_dir, filename)
+        storage_path = StorageService.build_storage_path(user_id, upload_file.filename)
+        storage = StorageService()
+        storage.upload(file_bytes, storage_path)
 
-        with open(file_path, "wb") as buffer:
-            shutil.copyfileobj(upload_file.file, buffer)
-
-        file_size = os.path.getsize(file_path)
-
-        return file_path, file_size
+        return storage_path, file_size
 
     def create_document(
         self,
@@ -85,13 +76,16 @@ class DocumentService:
         document.status = ProcessingStatus.PROCESSING
         self.db.commit()
 
+        tmp_path = None
         try:
-            if not PDFProcessor.is_valid_pdf(document.file_path):
+            # Download from Supabase Storage to a local temp file for processing
+            storage = StorageService()
+            tmp_path = storage.download_to_temp(document.file_path)
+
+            if not PDFProcessor.is_valid_pdf(tmp_path):
                 raise Exception("Invalid PDF file")
 
-            page_texts, page_count = self.pdf_processor.extract_text_by_pages(
-                document.file_path
-            )
+            page_texts, page_count = self.pdf_processor.extract_text_by_pages(tmp_path)
 
             full_text = "\n\n".join([text for _, text in page_texts])
 
@@ -124,6 +118,10 @@ class DocumentService:
             self.db.commit()
 
             raise Exception(f"Failed to process document: {e}")
+
+        finally:
+            if tmp_path and os.path.exists(tmp_path):
+                os.unlink(tmp_path)
 
     def get_user_documents(
         self,
@@ -171,22 +169,20 @@ class DocumentService:
 
     def delete_document(self, document_id: int, user_id: int) -> bool:
         """
-        Delete document and its file.
+        Delete document record and its file from Supabase Storage.
 
         Returns:
             True if deleted, False if not found
-
-        Senior Tip: Clean up files and database records.
         """
         document = self.get_document(document_id, user_id)
         if not document:
             return False
 
         try:
-            if os.path.exists(document.file_path):
-                os.remove(document.file_path)
+            storage = StorageService()
+            storage.delete(document.file_path)
         except Exception as e:
-            print(f"Failed to delete file: {e}")
+            print(f"Failed to delete file from storage: {e}")
 
         self.db.delete(document)
         self.db.commit()

@@ -1,3 +1,4 @@
+from typing import Optional
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
@@ -23,7 +24,12 @@ class Settings(BaseSettings):
     OPENAI_API_KEY: str
     ANTHROPIC_API_KEY: str
 
-    # Storage
+    # Supabase Storage
+    SUPABASE_URL: Optional[str] = None
+    SUPABASE_KEY: Optional[str] = None
+    SUPABASE_BUCKET: str = "documents"
+
+    # Storage (legacy local fallback)
     UPLOAD_DIRECTORY: str = "./uploads"
     MAX_UPLOAD_SIZE: int = 10485760  # 10MB
     ALLOWED_FILE_TYPES: list = ["application/pdf"]

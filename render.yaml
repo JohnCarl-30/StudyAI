@@ -24,8 +24,12 @@ services:
         sync: false
       - key: ANTHROPIC_API_KEY
         sync: false
-      - key: UPLOAD_DIRECTORY
-        value: ./uploads
+      - key: SUPABASE_URL
+        sync: false          # set in Render dashboard
+      - key: SUPABASE_KEY
+        sync: false          # use service_role key from Supabase dashboard
+      - key: SUPABASE_BUCKET
+        value: documents
       - key: MAX_UPLOAD_SIZE
         value: 10485760
       - key: DEBUG
