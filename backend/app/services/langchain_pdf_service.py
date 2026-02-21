@@ -17,7 +17,7 @@ class LangChainPDFService:
         # Senior Tip: text-embedding-3-small is cheap ($0.02/1M tokens)
         # and good enough for educational content
         self.embeddings = OpenAIEmbeddings(
-            model="text-embedding-3-small",
+            model="text-embedding-ada-002",
             api_key=settings.OPENAI_API_KEY
         )
 

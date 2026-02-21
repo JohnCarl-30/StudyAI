@@ -29,7 +29,7 @@ class PineconeService:
         self._ensure_index_exists()
 
         self.embeddings = OpenAIEmbeddings(
-            model="text-embedding-3-small",
+            model="text-embedding-ada-002",
             openai_api_key=settings.OPENAI_API_KEY
         )
 
