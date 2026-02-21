@@ -89,9 +89,11 @@ class RAGService:
             max_tokens=4096
         )
 
+        import httpx
         self.embeddings = OpenAIEmbeddings(
             model="text-embedding-3-small",
-            openai_api_key=settings.OPENAI_API_KEY
+            openai_api_key=settings.OPENAI_API_KEY,
+            http_client=httpx.Client()
         )
 
         # Initialize once and reuse — creating PineconeService on every
